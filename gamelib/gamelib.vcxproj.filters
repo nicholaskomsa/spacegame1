@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="cefgui">
+      <UniqueIdentifier>{59fc048d-6643-4ac3-a360-dcdddd5285d2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cefappbrowser.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="cefapprenderer.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="cefprocess.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="cefrenderhandlerogre.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="cefresourcehandler.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="cefv8handler.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="guiarglist.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="guisheet.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="guisheetmanagerbrowser.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="guisheetmanagermessages.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="guisheetmanagerrenderer.cpp">
+      <Filter>cefgui</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graphicalobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mathutils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdlkeycodeswindows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cefappbrowser.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cefappother.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cefapprenderer.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cefclientbrowser.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cefprocess.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cefrenderhandlerogre.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cefresourcehandler.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ceftest.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cefv8handler.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="guiarglist.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="guisheet.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="guisheetmanagerbrowser.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="guisheetmanagermessages.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="guisheetmanagerrenderer.h">
+      <Filter>cefgui</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphicalobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mathutils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="movableobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlkeycodeswindows.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
