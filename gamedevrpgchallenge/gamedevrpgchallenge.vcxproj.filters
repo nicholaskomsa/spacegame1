@@ -13,62 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="html">
-      <UniqueIdentifier>{af706b31-de91-4f46-91bc-29f6f507fbb4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gamemain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gamemode.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gamemode_splash.cpp">
+    <ClCompile Include="gamemode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gamemode_play.cpp">
+    <ClCompile Include="gamemode_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_playground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gamemode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gamemode_splash.h">
+    <ClInclude Include="gamemode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gamemode_play.h">
+    <ClInclude Include="gamemode_test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test_playground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="physicsdynamics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionphysics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="..\..\..\lib\src\ceftarget.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_credits.htm">
-      <Filter>html</Filter>
-    </None>
-    <None Include="..\..\spacegame1_bin\media\cefgui\statusbar.html">
-      <Filter>html</Filter>
-    </None>
-    <None Include="..\..\spacegame1_bin\media\cefgui\ogretool.htm">
-      <Filter>html</Filter>
-    </None>
-    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_splash.htm">
-      <Filter>html</Filter>
-    </None>
-    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_play.htm">
-      <Filter>html</Filter>
-    </None>
-    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_lose.htm">
-      <Filter>html</Filter>
-    </None>
   </ItemGroup>
 </Project>

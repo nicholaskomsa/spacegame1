@@ -72,6 +72,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Users\nick\Documents\programming\lib\src\openalsoft117\openal-soft-1.17.1\include;C:\Users\nick\Documents\programming\lib\src\bullet3-2.86.1\src;C:\Users\nick\Documents\programming\lib\src\cef_binary_3.3071.1644.g408afd1_windows64\cef_binary_3.3071.1644.g408afd1_windows64;C:\Users\nick\Documents\programming\lib\src\SDL2-2.0.7\include;C:\Users\nick\Documents\programming\lib\bin\SDL2\include;C:\Users\nick\Documents\programming\lib\bin\ogre1_11\include;C:\Users\nick\Documents\programming\lib\src\ogre\OgreMain\include;C:\Users\nick\Documents\programming\projects 2018\spacegame1\gamelib;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\nick\Documents\programming\lib\bin\openalsoft\$(Configuration);C:\Users\nick\Documents\programming\lib\bin\bullet\lib\$(configuration);C:\Users\nick\Documents\programming\lib\bin\cef3_64\libcef_dll_wrapper\$(configuration);C:\Users\nick\Documents\programming\lib\src\cef_binary_3.3071.1644.g408afd1_windows64\cef_binary_3.3071.1644.g408afd1_windows64\$(configuration)\;C:\Users\nick\Documents\programming\lib\bin\SDL2\$(configuration);C:\Users\nick\Documents\programming\lib\bin\ogre1_11\lib\$(configuration);C:\Users\nick\Documents\programming\projects 2018\spacegame1\x64\$(configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>C:\Users\nick\Documents\programming\projects 2018\spacegame1_bin\$(configuration)\</OutDir>
+    <IntDir>C:\Users\nick\Documents\programming\projects 2018\spacegame1_bin\inter\$ProjectName)\$(configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -87,6 +89,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_ENABLE_EXTENDED_ALIGNED_STORAGE; _MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies> openal32.lib;LinearMath_Debug.lib; BulletCollision_Debug.lib; libcef_dll_wrapper.lib; libcef.lib; sdl2d.lib; ogremain_d.lib; gamelib.lib; kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -132,6 +135,27 @@
     <ClInclude Include="gamemode.h" />
     <ClInclude Include="gamemode_play.h" />
     <ClInclude Include="gamemode_splash.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="..\..\..\lib\src\ceftarget.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_credits.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_lose.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_play.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_splash.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\spacegame1_bin\media\cefgui\ogretool.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\spacegame1_bin\media\cefgui\statusbar.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

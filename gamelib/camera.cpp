@@ -156,6 +156,7 @@ void Camera::setPolyPoints() {
 void Camera::lookAt(Ogre::Vector3 position) {
 	mCamera->lookAt(position);
 }
+
 void Camera::setOrthoView(Ogre::Real w, Ogre::Real h) {
 
 	mCamera->setProjectionType(Ogre::ProjectionType::PT_ORTHOGRAPHIC);

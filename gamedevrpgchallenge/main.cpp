@@ -1,13 +1,14 @@
 #include <windows.h>
 
-#include "exception.h"
+#include <exception.h>
+
 #include "game.h"
+
 
 INT WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT) {
 
 	CefProcess	cefProcess;
 	cefProcess.doBranching();
-
 
 	try {
 
@@ -20,6 +21,7 @@ INT WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT) {
 	catch (Ogre::Exception& e) {
 		OutputDebugStringA(e.getFullDescription().c_str());
 		MessageBoxEx(NULL, e.getFullDescription().c_str(), "Exception", MB_OK, 0);
+
 	}
 	catch (Exception& e) {
 		e.writeDebugString();

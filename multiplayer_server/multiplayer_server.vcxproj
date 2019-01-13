@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{73501D07-0B5F-4F27-9132-F362CC5222E6}</ProjectGuid>
-    <RootNamespace>gamelib</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{835D9BD6-1C33-42EA-A775-F2532F22CD94}</ProjectGuid>
+    <RootNamespace>multiplayerserver</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -39,13 +39,13 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -70,26 +70,30 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\nick\Documents\programming\lib\src\openalsoft117\openal-soft-1.17.1\include;C:\Users\nick\Documents\programming\lib\src\bullet3-2.86.1\src;C:\Users\nick\Documents\programming\lib\src\cef_binary_3.3071.1644.g408afd1_windows64\cef_binary_3.3071.1644.g408afd1_windows64;C:\Users\nick\Documents\programming\lib\src\SDL2-2.0.7\include;C:\Users\nick\Documents\programming\lib\bin\ogre1_11\include;C:\Users\nick\Documents\programming\lib\src\boost_1_64_0\boost_1_64_0;C:\Users\nick\Documents\programming\lib\src\ogre\OgreMain\include;$(IncludePath)</IncludePath>
+    <OutDir>C:\Users\nick\Documents\programming\projects 2018\spacegame1_bin\$(configuration)</OutDir>
+    <IntDir>C:\Users\nick\Documents\programming\projects 2018\spacegame1_bin\inter\$(ProjectName)\$(configuration)</IntDir>
+    <IncludePath>C:\Users\nick\Documents\programming\lib\src\RakNet\Source;C:\Users\nick\Documents\programming\lib\src\openalsoft117\openal-soft-1.17.1\include;C:\Users\nick\Documents\programming\lib\src\bullet3-2.86.1\src;C:\Users\nick\Documents\programming\lib\src\cef_binary_3.3071.1644.g408afd1_windows64\cef_binary_3.3071.1644.g408afd1_windows64;C:\Users\nick\Documents\programming\lib\src\SDL2-2.0.7\include;C:\Users\nick\Documents\programming\lib\bin\SDL2\include;C:\Users\nick\Documents\programming\lib\bin\ogre1_11\include;C:\Users\nick\Documents\programming\lib\src\ogre\OgreMain\include;C:\Users\nick\Documents\programming\projects 2018\spacegame1\gamelib;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\nick\Documents\programming\lib\bin\RakNet\Lib\LibStatic\$(Configuration);C:\Users\nick\Documents\programming\lib\bin\openalsoft\$(Configuration);C:\Users\nick\Documents\programming\lib\bin\bullet\lib\$(configuration);C:\Users\nick\Documents\programming\lib\bin\cef3_64\libcef_dll_wrapper\$(configuration);C:\Users\nick\Documents\programming\lib\src\cef_binary_3.3071.1644.g408afd1_windows64\cef_binary_3.3071.1644.g408afd1_windows64\$(configuration)\;C:\Users\nick\Documents\programming\lib\bin\SDL2\$(configuration);C:\Users\nick\Documents\programming\lib\bin\ogre1_11\lib\$(configuration);C:\Users\nick\Documents\programming\projects 2018\spacegame1\x64\$(configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\nick\Documents\programming\lib\src\openalsoft117\openal-soft-1.17.1\include;C:\Users\nick\Documents\programming\lib\src\bullet3-2.86.1\src;C:\Users\nick\Documents\programming\lib\src\cef_binary_3.3071.1644.g408afd1_windows64\cef_binary_3.3071.1644.g408afd1_windows64;C:\Users\nick\Documents\programming\lib\src\SDL2-2.0.7\include;C:\Users\nick\Documents\programming\lib\bin\ogre1_11\include;C:\Users\nick\Documents\programming\lib\src\boost_1_64_0\boost_1_64_0;C:\Users\nick\Documents\programming\lib\src\ogre\OgreMain\include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>WIN32;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE; _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies> raknetlibstatic.lib; ws2_32.lib; openal32.lib;LinearMath_Debug.lib; BulletCollision_Debug.lib; libcef_dll_wrapper.lib; libcef.lib; sdl2d.lib; ogremain_d.lib; gamelib.lib; kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,53 +125,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="audio.cpp" />
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="exception.cpp" />
-    <ClCompile Include="graphicalobject.cpp" />
-    <ClCompile Include="graphics.cpp" />
-    <ClCompile Include="log.cpp" />
-    <ClCompile Include="mathutils.cpp" />
-    <ClCompile Include="physics.cpp" />
-    <ClCompile Include="sdlkeycodeswindows.cpp" />
-    <ClCompile Include="cefappbrowser.cpp" />
-    <ClCompile Include="cefapprenderer.cpp" />
-    <ClCompile Include="cefprocess.cpp" />
-    <ClCompile Include="cefrenderhandlerogre.cpp" />
-    <ClCompile Include="cefresourcehandler.cpp" />
-    <ClCompile Include="cefv8handler.cpp" />
-    <ClCompile Include="guiarglist.cpp" />
-    <ClCompile Include="guisheet.cpp" />
-    <ClCompile Include="guisheetmanagerbrowser.cpp" />
-    <ClCompile Include="guisheetmanagermessages.cpp" />
-    <ClCompile Include="guisheetmanagerrenderer.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="gamemain.cpp" />
+    <ClCompile Include="gamemode.cpp" />
+    <ClCompile Include="gamemode_play.cpp" />
+    <ClCompile Include="network.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="audio.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="exception.h" />
-    <ClInclude Include="graphicalobject.h" />
-    <ClInclude Include="graphics.h" />
-    <ClInclude Include="log.h" />
-    <ClInclude Include="mathutils.h" />
-    <ClInclude Include="movableobject.h" />
-    <ClInclude Include="physics.h" />
-    <ClInclude Include="sdlinput.h" />
-    <ClInclude Include="sdlkeycodeswindows.h" />
-    <ClInclude Include="cefappbrowser.h" />
-    <ClInclude Include="cefappother.h" />
-    <ClInclude Include="cefapprenderer.h" />
-    <ClInclude Include="cefclientbrowser.h" />
-    <ClInclude Include="cefprocess.h" />
-    <ClInclude Include="cefrenderhandlerogre.h" />
-    <ClInclude Include="cefresourcehandler.h" />
-    <ClInclude Include="ceftest.h" />
-    <ClInclude Include="cefv8handler.h" />
-    <ClInclude Include="guiarglist.h" />
-    <ClInclude Include="guisheet.h" />
-    <ClInclude Include="guisheetmanagerbrowser.h" />
-    <ClInclude Include="guisheetmanagermessages.h" />
-    <ClInclude Include="guisheetmanagerrenderer.h" />
+    <Manifest Include="..\..\..\lib\src\ceftarget.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="gamemode.h" />
+    <ClInclude Include="gamemode_play.h" />
+    <ClInclude Include="gamenetwork.h" />
+    <ClInclude Include="network.h" />
+    <ClInclude Include="playground.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\spacegame1_bin\media\cefgui\networking_server.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

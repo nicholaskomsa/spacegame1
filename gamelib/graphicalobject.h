@@ -110,15 +110,15 @@ protected:
 
 	static MethodMap mMethods;
 
-	Ogre::Real mScale{ 1 };
+	Ogre::Vector3 mScale{ 1,1,1 };
 public:
 
 	void setupMethods();
 
 	void setup(Graphics* graphics,  Ogre::String meshName, std::size_t numInstances=0, Ogre::String instanceMaterialSuffix="none", bool clone=true, bool moves = false, bool animated = false);
 	void shutdown();
-	void setScale(Ogre::Real scale);
-	Ogre::Real getScale();
+	void setScale(Ogre::Vector3 scale);
+	Ogre::Vector3 getScale();
 	void defrag();
 
 

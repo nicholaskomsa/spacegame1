@@ -118,14 +118,14 @@ EntityManager::InstancedEntityMethod::InstancedEntityMethod(Ogre::String materia
 
 EntityManager::MethodMap EntityManager::mMethods;
 
-void EntityManager::setScale(Ogre::Real scale) {
+void EntityManager::setScale(Ogre::Vector3 scale) {
 	mScale = scale;
 }
-Ogre::Real EntityManager::getScale() {
+Ogre::Vector3 EntityManager::getScale() {
 	return mScale;
 }
 void EntityManager::setupMethods() {
-
+	//the performance numbers may be fucked up?! may depend on hardware?!
 	mMethods["ShaderBased"] = EntityManager::InstancedEntityMethod("Examples/Instancing/ShaderBased/", Ogre::InstanceManager::ShaderBased, Ogre::IM_USEALL, 1, 2, 1);
 	mMethods["TextureVTF"] = EntityManager::InstancedEntityMethod("Examples/Instancing/VTF/", Ogre::InstanceManager::TextureVTF, Ogre::IM_USEALL, 2, 1, 5);
 	mMethods["HWInstancinBasic"] = EntityManager::InstancedEntityMethod("Examples/Instancing/HWBasic/", Ogre::InstanceManager::HWInstancingBasic, Ogre::IM_USEALL, 0, 4, 4);
@@ -139,7 +139,7 @@ void EntityManager::setup(Graphics* graphics, Ogre::String meshName, std::size_t
 	std::stringstream sstr;
 	sstr << nameCounter++;
 
-	mScale = 1;
+	mScale = Ogre::Vector3(1,1,1);
 
 	mInstanceMaterialSuffix = instanceMaterialSuffix;
 	mMeshName = meshName;
@@ -274,22 +274,23 @@ Ogre::String  EntityManager::getSupportedMethods(Graphics* graphics, bool moves,
 	});
 
 	Ogre::String methodName = "ShaderBased";
-	EntityManager::InstancedEntityMethod* method1 = &mMethods[methodName];
+	EntityManager::InstancedEntityMethod* chosenMethod = &mMethods[methodName];
 	//get the one with the highest static speed that is supported
 	std::for_each(mMethods.begin(), mMethods.end(), [&](auto& pair) {
 		EntityManager::InstancedEntityMethod* method2 = &pair.second;
 
 		if (method2->numInstances != 0 &&
-			(!moves && !animated && method1->staticSpeed <= method2->staticSpeed) ||
-			(moves && animated && method1->moveSpeed + method1->animSpeed <= method2->moveSpeed + method2->animSpeed) ||
-			(moves && method1->moveSpeed <= method2->moveSpeed) ||
-			(animated && method1->animSpeed <= method2->animSpeed))
+			(!moves && !animated && chosenMethod->staticSpeed <= method2->staticSpeed) ||
+			(moves && animated && chosenMethod->moveSpeed + chosenMethod->animSpeed <= method2->moveSpeed + method2->animSpeed) ||
+			(moves && chosenMethod->moveSpeed <= method2->moveSpeed) ||
+			(animated && chosenMethod->animSpeed <= method2->animSpeed)) {
 
+			chosenMethod = method2;
 			methodName = pair.first;
-
+		}
 	});
 
-	if (mMethods[methodName].numInstances == 0) return "None";
+	if (chosenMethod->numInstances == 0) return "None";
 
 	return methodName;
 }

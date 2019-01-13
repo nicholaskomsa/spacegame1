@@ -293,6 +293,19 @@ public:
 		addKey(SDLK_9, timeBetweenClicks);
 		addKey(SDLK_PERIOD, timeBetweenClicks);
 	}
+	void addAlphaKeys(std::chrono::milliseconds timeBetweenClicks = std::chrono::milliseconds(0)) {
+		int sdlKeyStart = SDLK_a;
+		int sdlKeyEnd = SDLK_z;
+
+		for (int key = sdlKeyStart; key < sdlKeyEnd; ++key) {
+			addKey(key);
+		}
+
+	}
+
+
+
+
 
 	virtual void keyUp(const Key& k) {}
 	virtual void keyDown(const Key& k) {}
