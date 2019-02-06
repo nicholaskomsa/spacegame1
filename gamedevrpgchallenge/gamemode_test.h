@@ -24,7 +24,7 @@ public:
 	virtual ~GameMode_Test();
 
 	void setup();
-	void step();
+	void step( std::chrono::milliseconds elapsedTime);
 	std::shared_ptr<GameMode> shutdown();
 	void keyPressed(const SDL_KeyboardEvent* evt);
 };

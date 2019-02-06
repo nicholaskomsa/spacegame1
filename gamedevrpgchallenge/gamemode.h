@@ -1,5 +1,5 @@
 #include <memory>
-
+#include <chrono>
 
 #pragma once
 
@@ -20,5 +20,5 @@ public:
 	void run();
 	virtual std::shared_ptr<GameMode> shutdown() = 0;
 
-	virtual void step() = 0;
+	virtual void step( std::chrono::milliseconds elapsedTime) = 0;
 };

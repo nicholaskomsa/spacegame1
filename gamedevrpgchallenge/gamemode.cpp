@@ -59,7 +59,7 @@ void GameMode::run() {
 			mGame->pollInput();
 			mGame->doCefWork();
 
-			step();
+			step(std::chrono::duration_cast<std::chrono::milliseconds>( lag ) );
 
 			//finish tick
 			lag -= lengthOfFrame;

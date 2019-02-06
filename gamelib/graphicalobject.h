@@ -28,6 +28,121 @@ public:
 	void setOrientation(Ogre::Quaternion quat);
 	void setScale(Ogre::Vector3 scale);
 
+	Ogre::AnimationState* getAnimationState(std::string name) {
+		if (mSN)
+			return static_cast<Ogre::Entity*>(mObj)->getAnimationState(name);
+		else if (mObj)
+			return static_cast<Ogre::InstancedEntity*>(mObj)->getAnimationState(name);
+		else
+			EXCEPT << "GraphicalObject::getAnimationState, mObj is nullptr";
+
+		return nullptr;
+	}
+	bool isAnimationActive( std::string name) {
+		Ogre::AnimationState* animState = getAnimationState(name);
+		if (!animState) return false;
+		return animState->getEnabled();
+	}
+	void stopAnimations() {
+		Ogre::AnimationStateSet* animSet = nullptr;
+		if (mSN)
+			animSet = static_cast<Ogre::Entity*>(mObj)->getAllAnimationStates();
+		else if (mObj)
+			animSet= static_cast<Ogre::InstancedEntity*>(mObj)->getAllAnimationStates();
+		else
+			EXCEPT << "GraphicalObject::stopAnimations, mObj is nullptr";
+
+		if (!animSet) return;
+
+		Ogre::EnabledAnimationStateList enabledAnims = animSet->getEnabledAnimationStates();
+
+		for (auto& anim : enabledAnims) {
+			anim->setEnabled(false);
+		}
+	}
+	Ogre::SkeletonInstance* getSkeleton() {
+		Ogre::SkeletonInstance* skel = nullptr;
+		if (mSN)
+			skel = static_cast<Ogre::Entity*>(mObj)->getSkeleton();
+		else if (mObj)
+			skel = static_cast<Ogre::InstancedEntity*>(mObj)->getSkeleton();
+		else
+			EXCEPT << "GraphicalObject::getSkeleton, mObj is nullptr";
+
+		return skel;
+	}
+
+	void updateAnimations(std::chrono::milliseconds ms) {
+		Ogre::AnimationStateSet* animSet = nullptr;
+		if (mSN)
+			animSet = static_cast<Ogre::Entity*>(mObj)->getAllAnimationStates();
+		else if (mObj)
+			animSet = static_cast<Ogre::InstancedEntity*>(mObj)->getAllAnimationStates();
+		else
+			EXCEPT << "GraphicalObject::stopAnimations, mObj is nullptr";
+
+		if (!animSet) return;
+
+		Ogre::EnabledAnimationStateList enabledAnims = animSet->getEnabledAnimationStates();
+
+		for (auto& anim : enabledAnims) {
+			if (anim->hasEnded()) {
+				anim->setEnabled(false);
+				anim->setTimePosition(0);
+			}
+			else
+				anim->addTime(ms.count() / 1000.0f );
+		}
+	}
+	void setAnimation(std::string name, bool enabled=true, bool looping=true) {
+		Ogre::AnimationState* animState = getAnimationState(name);
+		if (!animState) return;
+
+		animState->setEnabled(enabled);
+		animState->setLoop(looping);
+	}
+	void setAnimationWeight(std::string name, Ogre::Real weight = 1.0) {
+		Ogre::AnimationState* animState = getAnimationState(name);
+		if (!animState) return;
+		animState->setWeight(weight);
+	}
+
+	void setBoneToNoWeight(std::string name ) {
+		Ogre::AnimationState* animState = getAnimationState(name);
+		if (!animState) return;
+
+		if (animState->hasBlendMask()) return;
+
+		Ogre::SkeletonInstance* skel = getSkeleton();
+
+		animState->createBlendMask(skel->getBones().size());
+		//animState->
+		
+		for( int i=0; i<skel->getBones().size(); ++i)
+			animState->setBlendMaskEntry(i, 0.0f);
+	}
+	void setBoneToMaxWeight(std::string name) {
+		Ogre::AnimationState* animState = getAnimationState(name);
+		if (!animState) return;
+
+		if (animState->hasBlendMask()) return;
+
+		Ogre::SkeletonInstance* skel = getSkeleton();
+
+		animState->createBlendMask(skel->getBones().size());
+		//animState->
+
+		for (int i = 0; i < skel->getBones().size(); ++i)
+			animState->setBlendMaskEntry(i, 2.0f);
+
+
+	}
+	void restartAnimation(std::string name) {
+		Ogre::AnimationState* animState = getAnimationState(name);
+		if (!animState) return;
+		animState->setTimePosition(0);
+	}
+
 	Ogre::Vector3 getPosition();
 
 	void setMaterialName(Ogre::String matName) {

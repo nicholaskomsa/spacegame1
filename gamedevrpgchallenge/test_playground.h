@@ -117,14 +117,32 @@ public:
 
 
 
+class GameObject_Bullet : public MovableObject {
+
+	btVector3 mVelocity{ 0,0,0 };
+	btQuaternion mTrajectory;
+
+public:
+
+
+
+};
+
+
 class GameObject : public MovableObject {
 	btVector3 mVelocity{ 0,0,0 };
 
-	btScalar mYSpeed{ 5 }, mXSpeed{ 0.3 };
+	btScalar mYSpeed{ 2 }, mXSpeed{ 0.3 };
 
 	btQuaternion mTrajectory;
 
-	bool mFalling{ false };
+	bool mFalling{ false }, mJumping{ false };
+
+	std::chrono::milliseconds mTimeBetweenShots{ 542 };
+	std::chrono::milliseconds mTimeOfLastShot{ 0 };
+
+	bool mFacingLeft{ true };
+
 public:
 	
 	btVector3 getPosition() {
@@ -146,7 +164,7 @@ public:
 		mVelocity = vel;
 	}
 	btVector3 getVelocity() { return mVelocity; }
-	void act() {
+	void act( std::chrono::milliseconds elapsed ) {
 
 
 
@@ -160,36 +178,85 @@ public:
 
 		btTransform& worldTrans = getTransform();
 		worldTrans.setOrigin(worldTrans.getOrigin() + mVelocity);
+
+		
+		addTime(elapsed);
 	}
 	void startFalling() {
 		mFalling = true;
 	}
 	void stopFalling() {
 		mFalling = false;
+		mJumping = false;
+	}
+
+	void shootGun() {
+		std::chrono::time_point<std::chrono::steady_clock> curTime = std::chrono::steady_clock::now();
+		static std::chrono::time_point<std::chrono::steady_clock> endTime = std::chrono::steady_clock::now();
+		std::chrono::milliseconds elapsedTime(std::chrono::duration_cast<std::chrono::milliseconds>(curTime-endTime));
+		
+
+		if (elapsedTime >= mTimeBetweenShots) {
+			endTime = curTime;
+			mGraphicalObject->setBoneToNoWeight("Walk");	
+			mGraphicalObject->setBoneToMaxWeight("Shoot");
+
+			mGraphicalObject->setAnimation("Shoot", true, false);
+		//	if (mGraphicalObject->isAnimationActive("Walk")) {
+
+		//	}
+
+		}
 	}
 	void moveRight() {
-
-		mTrajectory = btQuaternion(btVector3(0, 0, 1), Ogre::Degree(180).valueRadians());
-		accelerate(mTrajectory, mXSpeed);
-	}
-	void moveLeft() {
-
+		mVelocity.setX(0);
 		mTrajectory = btQuaternion(btVector3(0, 0, 1), Ogre::Degree(0).valueRadians());
 		accelerate(mTrajectory, mXSpeed);
+
+		mGraphicalObject->setOrientation(Ogre::Quaternion(Ogre::Degree(0), Ogre::Vector3(0, 1, 0)));
+
+		mGraphicalObject->setAnimation("Idle", false);
+
+
+		mGraphicalObject->setAnimation("Walk");
+
+		mFacingLeft = false;
+	}
+	void moveLeft() {
+		mVelocity.setX(0);
+		mTrajectory = btQuaternion(btVector3(0, 0, 1), Ogre::Degree(180).valueRadians());
+		accelerate(mTrajectory, mXSpeed);
+
+		mGraphicalObject->setOrientation(Ogre::Quaternion(Ogre::Degree(180), Ogre::Vector3(0, 1, 0)));
+
+		mGraphicalObject->setAnimation("Idle", false);
+		//mGraphicalObject->setBoneToNoWeight("Walk");
+		mGraphicalObject->setAnimation("Walk");
+
+		mFacingLeft = true;
 	}
 	void stopY() {
 		mVelocity.setY(0);
 	}
 	void stopX() {
 		mVelocity.setX(0);
+		
+		if (!mGraphicalObject->isAnimationActive("Shoot")) {
+			mGraphicalObject->setAnimation("Walk", false);
+		//	mGraphicalObject->setAnimation("Idle");
+
+		}
+		
 	}
 	bool isFalling() {
 		return mFalling;
 	}
+	bool isJumping() {
+		return mJumping;
+	}
+	void jump(bool multiJump ) {
 
-	void jump() {
-
-		if (!mFalling) {
+		if (!mJumping || multiJump) {
 			if( mVelocity.x() >0 )
 				mTrajectory = btQuaternion(btVector3(0, 0, 1), Ogre::Degree(80).valueRadians() );
 			else if( mVelocity.x() < 0)
@@ -198,9 +265,10 @@ public:
 				mTrajectory = btQuaternion(btVector3(0, 0, 1), Ogre::Degree(90).valueRadians());
 		
 			accelerate(mTrajectory, mYSpeed);
+			mJumping = true;
 		}
 	}
-
+	
 };
 
 
@@ -302,10 +370,12 @@ public:
 	bool isNotFalling() {
 		return !mObjectPlayer->isFalling();
 	}
+	bool isPlayerJumping() {
+		return mObjectPlayer->isJumping();
+	}
 
-
-	void playerJump() {
-		mObjectPlayer->jump();
+	void playerJump(bool multiJump = false) {
+		mObjectPlayer->jump( multiJump );
 	}
 
 	void playerRight() {
@@ -318,7 +388,10 @@ public:
 		mObjectPlayer->moveLeft();
 
 	}
+	void playerShootGun() {
+		mObjectPlayer->shootGun();
 
+	}
 	void loadMap() {
 
 		btScalar scaleMultiplier = 10;
@@ -432,15 +505,15 @@ public:
 
 
 		mObjectPlayerTemplate = std::make_shared<GraphicalObjectTemplate>(COLLISION_IDS::ID_PLAYER, 0, 0,
-			btVector3(1, 1, 1),
-			platformTemplateMeshName, "Asteroid1.1", false, true);
+			btVector3(0.1, 0.1, 0.1),
+			"robot.mesh", "Robot1.1", false, true);
 		mObjectPlayerTemplate->create(mGame->getGraphics(),1);
 
 		btTransform trans;
 		trans.setIdentity();
 		trans.setOrigin(btVector3(-0, 20, 0));
 		mObjectPlayer = std::make_shared<GameObject>();
-		mObjectPlayer->create(mGame->getGraphics(), mPhysics.getWorld(), mObjectPlayerTemplate, trans, btVector3(1,1,1));
+		mObjectPlayer->create(mGame->getGraphics(), mPhysics.getWorld(), mObjectPlayerTemplate, trans, btVector3(0.1,0.1,0.1));
 
 		
 		//this is the collision direction pointer
@@ -479,9 +552,9 @@ public:
 		mPhysics.shutdown();
 	}
 
-	void step() {
+	void step( std::chrono::milliseconds elapsedTime) {
 		//so this order is important given handleInput, wrong order results in wrong vector behavior in collisionDetect
-		mObjectPlayer->act();
+		mObjectPlayer->act( elapsedTime );
 		mPhysics.performCollisionDetection();
 
 		mObjectPlayer->updateGraphics();
@@ -504,19 +577,15 @@ public:
 
 			if (objB->getCollisionID() == COLLISION_IDS::ID_PLAYER) {
 
-
-			
+				//a collision between these two objects has occured
 
 				//platform collides with player, uncollide player;
 				GameObject* player = dynamic_cast<GameObject*>(objB);
 				PlatformObject* platform = dynamic_cast<PlatformObject*>(objA);
 
 
-
-
-	
 				btBox2dShape* playerBox = dynamic_cast<btBox2dShape*>(player->getCollisionObject()->getCollisionShape());
-				btVector3 playerHalf = playerBox->getHalfExtentsWithMargin();
+				btVector3 playerHalf = playerBox->getHalfExtentsWithoutMargin();
 
 				btBox2dShape* platformBox = dynamic_cast<btBox2dShape*>(platform->getCollisionObject()->getCollisionShape());
 				btVector3 platformHalfNoMargin = platformBox->getHalfExtentsWithoutMargin();
@@ -527,60 +596,45 @@ public:
 
 				// determine what quadrant the player object is in compared to the platform
 
-				btVector3 platformQuadrantPoint(0, 0, 0);
-				btVector3 playerQuadrantPoint(0, 0, 0);
-
-				btVector3 topLeft, topRight,
-					botLeft, botRight;
-
-				topLeft = topRight = botLeft = botRight = btVector3(0, 0, 0);
-
-				topLeft.setY(platOrigin.y() + platformHalfNoMargin.y());
-				topLeft.setX(platOrigin.x() - platformHalfNoMargin.x());
-
-				topRight.setY(topLeft.y());;
-				topRight.setX(platOrigin.x() + platformHalfNoMargin.x());
-				
-				botLeft.setY(platOrigin.y() - platformHalfNoMargin.y());
-				botLeft.setX(platOrigin.x() - platformHalfNoMargin.x());
-
-				botRight.setY(botLeft.y());
-				botRight.setX(platOrigin.x() + platformHalfNoMargin.x());
-
 				btScalar polarityX = 1;
 				btScalar polarityY = 1;
 				btVector3 playerVel = player->getVelocity();
 
+				btVector3 platformQuadrantPoint(0, 0, 0);
+
 				if (playerVel.y() > 0) { //going up
-					platformQuadrantPoint.setY(botRight.y());
+					platformQuadrantPoint.setY( platOrigin.y() - platformHalfNoMargin.y() );
 					polarityY = 1;
 				}
 				else {//going down
-					platformQuadrantPoint.setY(topRight.y());
+					platformQuadrantPoint.setY( platOrigin.y() + platformHalfNoMargin.y() );
 					polarityY = -1;
 				}
 				if (playerVel.x() > 0) {
-					platformQuadrantPoint.setX(botLeft.x());
+					platformQuadrantPoint.setX( platOrigin.x() - platformHalfNoMargin.x() );
 					polarityX = 1;
 				}
 				else {
-					platformQuadrantPoint.setX(topRight.x());
+					platformQuadrantPoint.setX( platOrigin.x() + platformHalfNoMargin.x() );
 					polarityX = -1;
 				}
 				btTransform trans;
 				trans.setIdentity();
 				trans.setOrigin(platformQuadrantPoint);
+
+				//mObjectPositionCorner shows which vertex of the platform rect is being compared to
 				mObjectPositionCorner->setTransform(trans);
 				mObjectPositionCorner->updateGraphics();
+				
+				//now get both possible outcomes and then determine which one is correct
 
 				btVector3 theoreticalPositionY, theoreticalPositionX;
 
-				//come up with y-edge position
+				btVector3 playerPrevOrigin = playerOrigin - playerVel;
 
+				//come up with y-edge position
 				//we know the desired y-coord:
 				btScalar y = platformQuadrantPoint.y() - polarityY * playerHalf.y();
-
-				btVector3 playerPrevOrigin = playerOrigin - playerVel;
 
 				btScalar m = 0;
 				if (playerVel.x() != 0)
@@ -600,9 +654,7 @@ public:
 				//we know the desired x-coord:
 				x = platformQuadrantPoint.x() - polarityX * playerHalf.x();
 
-				y = 0;
-
-				if (playerVel.y() != 0)
+				if (playerVel.y() != 0 && m)
 					y = m * (x - playerPrevOrigin.x()) + playerPrevOrigin.y();
 				else 
 					y = playerPrevOrigin.y();
@@ -621,7 +673,7 @@ public:
 
 				btVector3 finalPosition;
 
-				if (xD < yD ) {
+				if (xD < yD && xDV.y() ) {
 					finalPosition = theoreticalPositionX - btVector3(polarityX* deCollide, 0, 0);
 					player->stopX();
 				
@@ -639,14 +691,9 @@ public:
 					player->stopY();
 				}
 
-				//btTransform trans;
 				trans.setIdentity();
 				trans.setOrigin(finalPosition);
 				player->setTransform(trans);
-			//	player->updateGraphics();
-
-
-
 			}
 
 		}

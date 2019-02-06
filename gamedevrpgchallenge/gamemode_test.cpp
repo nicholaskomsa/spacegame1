@@ -13,28 +13,60 @@ void GameMode_Test::handleInput() {
 	static bool jumping = false;
 	static int keyDownA = 0;
 	static int keyDownD = 0;
+	static int keyDownW = 0;
+	static int keyDownSpace = 0;
 
-	if (mTestPlayground->isNotFalling() && mGame->isKeyDown(SDLK_w)) {
+	static bool doubleJump = false;
+	
 
-		mTestPlayground->playerJump();
+	if (!keyDownW && mGame->isKeyDown(SDLK_w)) {
+		keyDownW = SDLK_w;
+		if (!mTestPlayground->isPlayerJumping()) {
+			mTestPlayground->playerJump(false);
+			doubleJump = false;
+		
+		}else {
+			if (!doubleJump) {
+				mTestPlayground->playerJump(true);
+				doubleJump = true;
+			}
+		}
+	}
+	else if( keyDownW && !mGame->isKeyDown(SDLK_w)) {
+		keyDownW = 0;
 	}
 
 	if (!keyDownA && mGame->isKeyDown(SDLK_a)) {
 		keyDownA = SDLK_a;
-		mTestPlayground->playerRight();
+		
+		mTestPlayground->playerLeft();
 
 	}else if(keyDownA && !mGame->isKeyDown(SDLK_a)) {
 		keyDownA = 0;
-		mTestPlayground->playerStopX();
 	}
 
 	if (!keyDownD && mGame->isKeyDown(SDLK_d)) {
 		keyDownD = SDLK_d;
-		mTestPlayground->playerLeft();
+		
+		mTestPlayground->playerRight();
 
 	}else if(keyDownD && !mGame->isKeyDown(SDLK_d)) {
 		keyDownD = 0;
+	}
+
+	if (!keyDownA && !keyDownD) {
 		mTestPlayground->playerStopX();
+	}
+
+
+	if (!keyDownSpace && mGame->isKeyDown(SDLK_SPACE)) {
+		keyDownSpace = SDLK_SPACE;
+
+		mTestPlayground->playerShootGun();
+
+	}
+	else if (keyDownSpace && !mGame->isKeyDown(SDLK_SPACE)) {
+		keyDownSpace = 0;
 	}
 }
 
@@ -54,7 +86,7 @@ void GameMode_Test::setup() {
 }
 
 
-void GameMode_Test::step() {
+void GameMode_Test::step( std::chrono::milliseconds elapsedTime) {
 
 	if (mGame->isKeyDown(SDLK_F1)) mGame->getCamera()->setPolySolid();
 	if (mGame->isKeyDown(SDLK_F2)) mGame->getCamera()->setPolyWireFrame();
@@ -62,7 +94,7 @@ void GameMode_Test::step() {
 
 	handleInput();
 
-	mTestPlayground->step();
+	mTestPlayground->step(elapsedTime);
 }
 
 std::shared_ptr<GameMode> GameMode_Test::shutdown() {
