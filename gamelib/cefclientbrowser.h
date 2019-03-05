@@ -97,6 +97,7 @@ public:
 	void setBrowser(CefRefPtr< CefBrowser> browser) {
 		mBrowser = browser;
 	}
+	CefRefPtr<CefBrowser>& getBrowser() { return mBrowser; }
 	void resize(int width, int height) {
 
 		mRenderHandlerOgre->resize(width, height);

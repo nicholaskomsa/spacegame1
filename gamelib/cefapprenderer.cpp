@@ -46,8 +46,7 @@ void CefAppRenderer::OnContextCreated(CefRefPtr<CefBrowser> browser,
 
 
 
-	LogManager::get("renderer") << "On Context Created browser: " << browser->GetIdentifier() << ", " << context->GetBrowser()->GetIdentifier() << Log::end;
-
+	LogManager::get("renderer") << "On Context Created browser: " << browser->GetIdentifier() << ", " << context->GetBrowser()->GetIdentifier() << ", " << browser->GetMainFrame()->GetURL() << Log::end;
 	// Retrieve the context's window object.
 	CefRefPtr<CefV8Value> object = context->GetGlobal();
 

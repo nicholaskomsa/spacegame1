@@ -17,6 +17,7 @@ void GuiSheetManagerBrowser::sendGuiToRenderer(GuiSheet* pSheet, CefRefPtr<CefBr
 	}
 	//the last string is the url to set
 	msgArgs->SetString(index, pSheet->url);
+	browser1->StopLoad();
 	browser1->SendProcessMessage(PID_RENDERER, msg);
 
 }

@@ -49,9 +49,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="..\..\..\lib\src\ceftarget.manifest" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_credits.htm">
       <Filter>html</Filter>
     </None>

@@ -137,9 +137,6 @@
     <ClInclude Include="gamemode_splash.h" />
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="..\..\..\lib\src\ceftarget.manifest" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\spacegame1_bin\media\cefgui\missilecommand_credits.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>

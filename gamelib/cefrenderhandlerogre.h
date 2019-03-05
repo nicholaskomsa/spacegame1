@@ -25,7 +25,7 @@ public:
 
 
 	// CefCefRenderHandlerOgre interface
-	bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect);
+	void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect);
 	void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height);
 	void clear();
 	void resize(int width, int height);

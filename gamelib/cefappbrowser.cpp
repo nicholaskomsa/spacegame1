@@ -33,6 +33,8 @@ void CefAppBrowser::createBrowser( Graphics* graphics, std::string sheetName, Gu
 
 	if (!mInitialized) return;
 
+	CEF_REQUIRE_UI_THREAD();
+	
 	CefWindowInfo windowInfo;
 	CefBrowserSettings browserSettings;
 
@@ -47,8 +49,11 @@ void CefAppBrowser::createBrowser( Graphics* graphics, std::string sheetName, Gu
 
 	windowInfo.SetAsWindowless((HWND)windowHandle);
 	browserSettings.background_color = CefColorSetARGB(0, 0, 0, 0);	//make transparent
+	browserSettings.windowless_frame_rate = 30;
 
-																	//get the cefgui media path
+
+
+	//get the cefgui media path
 	std::string mediaPath;
 	std::ifstream fin("cefguipath.cfg", std::ios::in);
 	std::getline(fin, mediaPath);
@@ -59,11 +64,15 @@ void CefAppBrowser::createBrowser( Graphics* graphics, std::string sheetName, Gu
 	mClientBrowser->getGuiSheetManager()->addSheet(sheetName, sheet);
 
 	//this method requires a url string passed in so i just use the scheme/domain
+
 	bool r = CefBrowserHost::CreateBrowser(windowInfo, mClientBrowser.get(), "cefgui://app/", browserSettings, NULL);
+
 	/**/
 	CefDoMessageLoopWork(); //create the browser:: onaftercreated called
 
+
 	mClientBrowser->getGuiSheetManager()->setSheet(sheetName);
+
 
 }
 GuiSheetManagerBrowser* CefAppBrowser::getGuiSheetManager() {

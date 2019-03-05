@@ -16,13 +16,12 @@ CefRenderHandlerOgre::~CefRenderHandlerOgre() {
 
 	//clear();
 }
-bool CefRenderHandlerOgre::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
+void CefRenderHandlerOgre::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 {
 	if (!renderTexture)
-		rect = CefRect(0, 0, 0, 0);
+		rect = CefRect(0, 0,10, 10);
 	else
 		rect = CefRect(0, 0, renderTexture->getWidth(), renderTexture->getHeight());
-	return true;
 }
 void CefRenderHandlerOgre::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
 {

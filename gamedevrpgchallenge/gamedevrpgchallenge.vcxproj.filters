@@ -54,7 +54,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Manifest Include="..\..\..\lib\src\ceftarget.manifest" />
-  </ItemGroup>
 </Project>

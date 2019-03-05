@@ -16,6 +16,11 @@ void GuiSheetManagerRenderer::setRendererGui(CefRefPtr<CefProcessMessage> msg, C
 		rbindings[msgArgs->GetString(binding)] = RBinding();
 	}
 	//last arg is url to set
+	
+	//->GetMainFrame()->
+
+	LogManager::get("renderer") << "LOAD URL " << msgArgs->GetString(static_cast<int>(msgArgs->GetSize()) - 1)  << " curent: "  << Log::end ;
+
 	browser1->GetMainFrame()->LoadURL(msgArgs->GetString(static_cast<int>(msgArgs->GetSize()) - 1));
 }
 
