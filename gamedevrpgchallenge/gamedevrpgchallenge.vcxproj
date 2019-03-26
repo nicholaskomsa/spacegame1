@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>D:\programming\hobby\projects 2019\spacegame1_bin\$(configuration)\</OutDir>
     <IntDir>D:\programming\hobby\projects 2019\inter\$(ProjectName)\$(configuration)\</IntDir>
-    <IncludePath>D:\programming\hobby\libraries\src\tinyxml2;D:\programming\hobby\libraries\src\openalsoft\include;D:\programming\hobby\libraries\src\bullet3\src;D:\programming\hobby\libraries\src\cef3;D:\programming\hobby\libraries\src\sdl2\include;D:\programming\hobby\libraries\bin\sdl2\include;D:\programming\hobby\libraries\bin\ogre\ogre-1.11.5\include;D:\programming\hobby\libraries\src\ogre\ogre-1.11.5\OgreMain\include;D:\programming\hobby\projects 2019\spacegame1\gamelib;$(IncludePath)</IncludePath>
+    <IncludePath>D:\programming\hobby\libraries\src\tinyxml2;D:\programming\hobby\libraries\src\openalsoft\include;D:\programming\hobby\libraries\src\bullet3\src;D:\programming\hobby\libraries\src\cef3;D:\programming\hobby\libraries\src\sdl2\include;D:\programming\hobby\libraries\bin\sdl2\include;D:\programming\hobby\libraries\bin\ogre\ogre-1.11.5\include;D:\programming\hobby\libraries\src\ogre\ogre-1.11.5\Components\RTShaderSystem\include;D:\programming\hobby\libraries\src\ogre\ogre-1.11.5\OgreMain\include;D:\programming\hobby\projects 2019\spacegame1\gamelib;$(IncludePath)</IncludePath>
     <LibraryPath>D:\programming\hobby\libraries\bin\tinyxml2\$(Configuration);D:\programming\hobby\libraries\bin\openalsoft\$(Configuration);D:\programming\hobby\libraries\bin\bullet3\lib\$(configuration);D:\programming\hobby\libraries\bin\cef3\libcef_dll_wrapper\$(configuration);D:\programming\hobby\libraries\src\cef3\$(configuration)\;D:\programming\hobby\libraries\bin\sdl2\$(configuration);D:\programming\hobby\libraries\bin\ogre\ogre-1.11.5\lib\$(configuration);D:\programming\hobby\projects 2019\spacegame1\x64\$(configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -85,7 +85,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies> tinyxml2d.lib; openal32.lib;LinearMath_Debug.lib; BulletDynamics_Debug.lib; BulletCollision_Debug.lib; libcef_dll_wrapper.lib; libcef.lib; sdl2d.lib; ogremain_d.lib; gamelib.lib; kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml2d.lib;openal32.lib;LinearMath_Debug.lib;BulletDynamics_Debug.lib;BulletCollision_Debug.lib;libcef_dll_wrapper.lib;libcef.lib;sdl2d.lib;ogremain_d.lib;ogrertshadersystem_d.lib;gamelib.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>D:\programming\hobby\libraries\src\cef3\tests\cefclient\resources\win\compatibility.manifest</AdditionalManifestFiles>

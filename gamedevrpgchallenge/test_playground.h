@@ -349,7 +349,7 @@ class Test_Playground {
 	enum COLLISION_IDS { NONE = 0, ID_PLATFORM, ID_PLAYER, ID_POSITION };
 
 	std::shared_ptr<GraphicalObjectTemplate> mObjectPlatform1Template1, mObjectPlatform1Template2;
-	std::shared_ptr<MovableObject> mObjectPlatform1, mObjectPlatform2, mObjectPlatform3, mObjectPlatform4;
+
 
 	std::shared_ptr<GraphicalObjectTemplate> mObjectPlayerTemplate;
 	std::shared_ptr<GameObject> mObjectPlayer;
@@ -393,7 +393,7 @@ public:
 
 	}
 	void loadMap() {
-		return;
+
 		/*
 		btScalar scaleMultiplier = 10;
 
@@ -507,7 +507,7 @@ public:
 
 		mObjectPlayerTemplate = std::make_shared<GraphicalObjectTemplate>(COLLISION_IDS::ID_PLAYER, 0, 0,
 			btVector3(0.1, 0.1, 0.1),
-			"robot.mesh", "Asteroid1.1", false, true);
+			"robot.mesh", "Robot", true, true);
 		mObjectPlayerTemplate->create(mGame->getGraphics(),1);
 
 		btTransform trans;
@@ -515,6 +515,12 @@ public:
 		trans.setOrigin(btVector3(-0, 20, 0));
 		mObjectPlayer = std::make_shared<GameObject>();
 		mObjectPlayer->create(mGame->getGraphics(), mPhysics.getWorld(), mObjectPlayerTemplate, trans, btVector3(0.1,0.1,0.1));
+
+
+
+	
+
+
 
 		/*
 		//this is the collision direction pointer
@@ -537,7 +543,7 @@ public:
 		callback = std::bind(&Test_Playground::collisionCallback, this, std::placeholders::_1, std::placeholders::_2);
 		mPhysics.setCollisionCallback(callback);
 
-		//loadMap();
+		loadMap();
 
 	
 	}
@@ -548,24 +554,25 @@ public:
 			platform->destroy(mGame->getGraphics(), mPhysics.getWorld());
 		}
 
+		*/
 		mObjectPlayer->destroy(mGame->getGraphics(), mPhysics.getWorld());
 		
-		mObjectPositionCorner->destroy(mGame->getGraphics(), mPhysics.getWorld());
-		*/
+		//mObjectPositionCorner->destroy(mGame->getGraphics(), mPhysics.getWorld());
+		//*/
 
 		mPhysics.shutdown();
 	}
 
 	void step( std::chrono::milliseconds elapsedTime) {
 		//so this order is important given handleInput, wrong order results in wrong vector behavior in collisionDetect
-		//mObjectPlayer->act( elapsedTime );
+		mObjectPlayer->act( elapsedTime );
 	//	mPhysics.performCollisionDetection();
 
-	//	mObjectPlayer->updateGraphics();
+		mObjectPlayer->updateGraphics();
 
-	//	Ogre::Vector3 cameraPos = MathUtilities::bt2Vec3( mObjectPlayer->getPosition() );
-	//	cameraPos.z =100;
-	//	mGame->getCamera()->setPosition(cameraPos);
+		Ogre::Vector3 cameraPos = MathUtilities::bt2Vec3( mObjectPlayer->getPosition() );
+		cameraPos.z =100;
+		mGame->getCamera()->setPosition(cameraPos);
 	}
 
 

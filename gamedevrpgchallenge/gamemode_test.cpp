@@ -17,7 +17,7 @@ void GameMode_Test::handleInput() {
 	static int keyDownSpace = 0;
 
 	static bool doubleJump = false;
-	/*
+	
 
 	if (!keyDownW && mGame->isKeyDown(SDLK_w)) {
 		keyDownW = SDLK_w;
@@ -69,7 +69,7 @@ void GameMode_Test::handleInput() {
 		keyDownSpace = 0;
 	}
 
-	*/
+	
 }
 
 

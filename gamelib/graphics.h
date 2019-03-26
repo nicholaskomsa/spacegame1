@@ -1,4 +1,5 @@
 #include <ogre.h>
+#include <OgreRTShaderSystem.h>
 
 #include <memory>
 
@@ -23,7 +24,7 @@ private:
 	Ogre::SceneManager* mSceneManager{ nullptr };
 	Ogre::Camera* mCamera{ nullptr } ;
 
-
+	Ogre::RTShader::ShaderGenerator*	mShaderGenerator{ nullptr };           // The Shader generator instance.
 
 	void addResourceLocations(std::string resourcesFileName);
 
@@ -31,6 +32,8 @@ private:
 	//Ogre::WindowEventListener* mWindowEventListener;//no longer used
 
 	void setupSDLVideo(std::string windowName, bool fullScreen, int width = 800, int height = 600);
+	void createCameraAndViewport(Ogre::ColourValue backgroundColor = Ogre::ColourValue::Blue);
+	bool initShaderGenerator();
 
 public:
 
@@ -45,11 +48,12 @@ public:
 
 	Ogre::Camera* getCamera();
 	Ogre::Root* getRoot();
+	Ogre::RTShader::ShaderGenerator* getShaderGenerator();
+
 
 	void setFrameListener( Ogre::FrameListener* frameListener);
 
-	void createCameraAndViewport(Ogre::ColourValue backgroundColor = Ogre::ColourValue::Blue);
 
-
+	
 };
 

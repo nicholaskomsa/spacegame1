@@ -63,6 +63,12 @@ void Graphics::setup(Ogre::String windowTitle, Ogre::String sceneManagerType, Og
 
 	mSceneManager = mRoot->createSceneManager(sceneManagerType, "DefaultSceneManager");
 
+	//if (!initShaderGenerator()) {
+
+	//	EXCEPT << "Graphics::create initShaderGenerator Failed!";
+	//}
+
+
 	addResourceLocations(resourcesFileName);
 
 	createCameraAndViewport();
@@ -71,8 +77,27 @@ void Graphics::setup(Ogre::String windowTitle, Ogre::String sceneManagerType, Og
 
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
+bool Graphics::initShaderGenerator() {
+	if (Ogre::RTShader::ShaderGenerator::initialize())
+	{
+		// Grab the shader generator pointer.
+		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+		// Add the shader libs resource location. a sample shader lib can be found in Samples\Media\RTShaderLib
+		//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(shaderLibPath, "FileSystem");	-this is added manually in resources.cfg
+		// Set shader cache path.
+	//	mShaderGenerator->setShaderCachePath(shaderCachePath);
+		// Set the scene manager.
+		mShaderGenerator->addSceneManager(mSceneManager);
+		return true;
+	}
+	return false;
+}
 void Graphics::shutdown() {
+	if( mShaderGenerator) mShaderGenerator->removeSceneManager(mSceneManager);
+
 	if (mRoot) {
+		mRoot->destroySceneManager(mSceneManager);
+
 		OGRE_DELETE mRoot;
 		mRoot = NULL;
 
@@ -195,3 +220,4 @@ Ogre::Root* Graphics::getRoot() {
 	return mRoot;
 }
 
+Ogre::RTShader::ShaderGenerator* Graphics::getShaderGenerator() { return mShaderGenerator; }

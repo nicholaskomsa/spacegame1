@@ -128,7 +128,7 @@ void EntityManager::setupMethods() {
 	//the performance numbers may be fucked up?! may depend on hardware?!
 	mMethods["ShaderBased"] = EntityManager::InstancedEntityMethod("Examples/Instancing/ShaderBased/", Ogre::InstanceManager::ShaderBased, Ogre::IM_USEALL, 1, 2, 1);
 	mMethods["TextureVTF"] = EntityManager::InstancedEntityMethod("Examples/Instancing/VTF/", Ogre::InstanceManager::TextureVTF, Ogre::IM_USEALL, 2, 1, 5);
-	mMethods["HWInstancinBasic"] = EntityManager::InstancedEntityMethod("Examples/Instancing/HWBasic/", Ogre::InstanceManager::HWInstancingBasic, Ogre::IM_USEALL, 0, 4, 4);
+	mMethods["HWInstancingBasic"] = EntityManager::InstancedEntityMethod("Examples/Instancing/HWBasic/", Ogre::InstanceManager::HWInstancingBasic, Ogre::IM_USEALL, 0, 4, 4);
 	mMethods["HWInstancingVTF"] = EntityManager::InstancedEntityMethod("Examples/Instancing/HW/VTF/", Ogre::InstanceManager::HWInstancingVTF, Ogre::IM_USEALL, 3, 3, 2);
 	mMethods["HWInstancingVTFLUT"] = EntityManager::InstancedEntityMethod("Examples/Instancing/HW/VTF/LUT/", Ogre::InstanceManager::HWInstancingVTF, Ogre::IM_USEALL | Ogre::IM_VTFBONEMATRIXLOOKUP, 4, 5, 3);
 }
@@ -151,8 +151,10 @@ void EntityManager::setup(Graphics* graphics, Ogre::String meshName, std::size_t
 		OGRE_EXCEPT(Ogre::Exception::ERR_ITEM_NOT_FOUND, "setup, instances=0, mesh not found!",
 			"EntityManager::EntityManager");
 
+	
+	
 	if ( mNumInstances == 0) {
-		mNumInstances = 0;
+
 		//use ogre::entity!
 		if (clone) {
 			Ogre::String materialName = mesh->getSubMesh(0)->getMaterialName();
@@ -280,10 +282,10 @@ Ogre::String  EntityManager::getSupportedMethods(Graphics* graphics, bool moves,
 		EntityManager::InstancedEntityMethod* method2 = &pair.second;
 
 		if (method2->numInstances != 0 &&
-			(!moves && !animated && chosenMethod->staticSpeed <= method2->staticSpeed) ||
+			((!moves && !animated && chosenMethod->staticSpeed <= method2->staticSpeed) ||
 			(moves && animated && chosenMethod->moveSpeed + chosenMethod->animSpeed <= method2->moveSpeed + method2->animSpeed) ||
 			(moves && chosenMethod->moveSpeed <= method2->moveSpeed) ||
-			(animated && chosenMethod->animSpeed <= method2->animSpeed)) {
+			(animated && chosenMethod->animSpeed <= method2->animSpeed))) {
 
 			chosenMethod = method2;
 			methodName = pair.first;
