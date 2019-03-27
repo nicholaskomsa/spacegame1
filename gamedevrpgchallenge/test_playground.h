@@ -394,7 +394,7 @@ public:
 	}
 	void loadMap() {
 
-		/*
+		
 		btScalar scaleMultiplier = 10;
 
 		//first off the platforms all use the same mesh, a cube or rect
@@ -433,63 +433,56 @@ public:
 
 		//run through and get the platform templates
 		tinyxml2::XMLNode* node1 = nodes->FirstChild();
+
+		node1 = nodes->FirstChild();
 		while (node1) {
 
 
 			tinyxml2::XMLElement* ele = node1->ToElement();
 			std::string name(ele->Attribute("name"));
 
+			if (name.find("platform") != std::string::npos) {
 
-			node1 = nodes->FirstChild();
-			while (node1) {
+				platformInstanceNum++;
 
+				btVector3 position(0, 0, 0);
+				btVector3 scale(1, 1, 1);
 
-				tinyxml2::XMLElement* ele = node1->ToElement();
-				std::string name(ele->Attribute("name"));
+				std::string meshName, matName;
+				int instanceNum = 0;
 
-				if (name.find("platform") != std::string::npos) {
+				tinyxml2::XMLElement* xmlPosition = ele->FirstChildElement("position");
+				std::string posX(xmlPosition->Attribute("x"))
+					, posY(xmlPosition->Attribute("y"))
+					, posZ(xmlPosition->Attribute("z"));
 
-					platformInstanceNum++;
+				position.setX(atof(posX.c_str()));
+				position.setY(atof(posY.c_str()));
+				position.setZ(atof(posZ.c_str()));
 
-					btVector3 position(0, 0, 0);
-					btVector3 scale(1, 1, 1);
+				position *= scaleMultiplier;
+				position.setZ(0);
 
-					std::string meshName, matName;
-					int instanceNum = 0;
+				tinyxml2::XMLElement* xmlScale = ele->FirstChildElement("scale");
+				std::string scaleX(xmlScale->Attribute("x"))
+					, scaleY(xmlScale->Attribute("y"))
+					, scaleZ(xmlScale->Attribute("z"));
 
-					tinyxml2::XMLElement* xmlPosition = ele->FirstChildElement("position");
-					std::string posX(xmlPosition->Attribute("x"))
-						, posY(xmlPosition->Attribute("y"))
-						, posZ(xmlPosition->Attribute("z"));
-
-					position.setX(atof(posX.c_str()));
-					position.setY(atof(posY.c_str()));
-					position.setZ(atof(posZ.c_str()));
-
-					position *= scaleMultiplier;
-					position.setZ(0);
-
-					tinyxml2::XMLElement* xmlScale = ele->FirstChildElement("scale");
-					std::string scaleX(xmlScale->Attribute("x"))
-						, scaleY(xmlScale->Attribute("y"))
-						, scaleZ(xmlScale->Attribute("z"));
-
-					scale.setX(atof(scaleX.c_str()));
-					scale.setY(atof(scaleY.c_str()));
-					scale.setZ(atof(scaleZ.c_str()));
+				scale.setX(atof(scaleX.c_str()));
+				scale.setY(atof(scaleY.c_str()));
+				scale.setZ(atof(scaleZ.c_str()));
 					
 
-					scale *= scaleMultiplier;
-					scale.setZ(1);
+				scale *= scaleMultiplier;
+				scale.setZ(1);
 					
-					platformData.push_back(PlatformData(position, scale));
+				platformData.push_back(PlatformData(position, scale));
 
-				}
-
-				node1 = node1->NextSibling();
 			}
-		}
 
+			node1 = node1->NextSibling();
+		}
+		
 
 
 
@@ -503,7 +496,7 @@ public:
 			trans.setOrigin(platform.position);
 			mPlatforms.back()->create(mGame->getGraphics(), mPhysics.getWorld(), mPlatformGraphicalTemplate, ID_PLATFORM,0,0, trans, platform.scale);
 		}
-		*/
+		
 
 		mObjectPlayerTemplate = std::make_shared<GraphicalObjectTemplate>(COLLISION_IDS::ID_PLAYER, 0, 0,
 			btVector3(0.1, 0.1, 0.1),
